@@ -1,9 +1,8 @@
-import _ from "lodash";
 import types from "../actionTypes";
 
 export const initState = {
   allItems: [],
-  currentItems: [{ name: "apples", price: "1", category: "milk", key: "1" }],
+  currentItems: [],
   loading: false,
 };
 

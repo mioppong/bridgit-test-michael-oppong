@@ -1,4 +1,3 @@
-import _ from "lodash";
 import types from "./actionTypes";
 
 export const addItem = (payload) => {
@@ -28,8 +27,28 @@ export const deleteItem = (payload) => {
 export const search = (payload) => {
   return function (dispatch) {
     dispatch({ type: types.SEARCH_START });
-    const { allItems, category } = payload;
-    const newList = allItems.filter((item) => (item.category = category));
+    const { allItems, value } = payload;
+    var newList;
+
+    if (value === "price")
+      newList = [...allItems].sort(function (a, b) {
+        return a[value] - b[value];
+      });
+
+    if (value === "category" || value === "item") {
+      newList = [...allItems].sort(function (a, b) {
+        var nameA = a[value].toUpperCase();
+        var nameB = b[value].toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
     dispatch({ type: types.SEARCH_SUCCESS, payload: newList });
   };
 };

@@ -1,4 +1,4 @@
-import { Button, Input } from "@material-ui/core";
+import { Button, Input, MenuItem, Select } from "@material-ui/core";
 import { isEmpty } from "lodash";
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
@@ -61,6 +61,11 @@ function App(props) {
     },
   ];
 
+  const handleSort = (item) => {
+    console.log("in handle sort", item);
+
+    props.search({ allItems: props.allItems, value: item });
+  };
   return (
     <>
       <header className="app-header">
@@ -70,8 +75,6 @@ function App(props) {
         </div>
       </header>
       <section className="app-content">
-        {/* Add your implementation here */}
-
         <div className="inputsContainer">
           <div className="individualInput">
             Item
@@ -106,6 +109,26 @@ function App(props) {
 
         {err && <div style={{ color: "red" }}>{err}</div>}
 
+        <div style={{ margin: 10 }}>
+          Sort By
+          <Select style={{ width: "100px" }}>
+            <MenuItem onClick={() => handleSort("item")} style={{ margin: 10 }}>
+              Item
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleSort("category")}
+              style={{ margin: 10 }}
+            >
+              Category
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleSort("price")}
+              style={{ margin: 10 }}
+            >
+              Price
+            </MenuItem>
+          </Select>
+        </div>
         <DataTable columns={columns} data={props.currentItems} render />
       </section>
     </>
